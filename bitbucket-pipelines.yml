@@ -1,0 +1,31 @@
+# This is a sample build configuration for JavaScript.
+# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:10.12.0
+
+pipelines:
+  branches:
+    platform-v1:
+      - step:
+          caches:
+            - node
+          script: # run ganache in the background and launch tests
+            - npm install
+            - git checkout package-lock.json # as we push changes later it is important to revert package-lock.json
+            - npm run ganache > /dev/null &
+            - npm test
+            - git commit -a -m "published new version"
+            - printf "//`node -p \"require('url').parse(process.env.NPM_REGISTRY_URL || 'https://registry.npmjs.org').host\"`/:_authToken=${NPM_TOKEN}\nregistry=${NPM_REGISTRY_URL:-https://registry.npmjs.org}\n" >> ~/.npmrc
+            - npm version patch -m "[skip CI]"
+            - git push
+            - npm publish --tag nightly-build
+  default:
+    - step:
+        caches:
+          - node
+        script: # run ganache in the background and launch tests
+          - npm install
+          - npm run ganache > /dev/null &
+          - npm test

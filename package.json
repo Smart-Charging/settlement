@@ -1,0 +1,63 @@
+{
+  "name": "@smartcharging/settlement",
+  "version": "0.1.3",
+  "description": "Share & Charge smart contracts pertaining to settlement of charging sessions",
+  "directories": {
+    "test": "test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "main.js",
+  "files": [
+    "*.json",
+    "*.js",
+    "*.d.ts",
+    "lib/*"
+  ],
+  "scripts": {
+    "compile": "truffle compile",
+    "test": "rm -Rf build && truffle test",
+    "lint": "solium -d contracts",
+    "cover": "solidity-coverage",
+    "migrate": "truffle migrate",
+    "ganache": "ganache-cli -m \"candy maple cake sugar pudding cream honey rich smooth crumble sweet treat\" --port 8544 --accounts 20 --networkId=9 --gasLimit=10000000",
+    "geth-dev": "geth --dev --networkid=9 --datadir=../.chaindata --dev.period 1 --rpc --rpcaddr 0.0.0.0 --rpccorsdomain=* --rpcapi=eth,personal,net,debug,shh --ws --wsaddr 0.0.0.0 --wsorigins=* --wsapi=eth,personal,net,pubsub,shh",
+    "parity-dev": "parity --config $PROJECT/network/dev.toml",
+    "publish-dev": "truffle migrate && node bin/publish.js",
+    "publish-poa": "truffle migrate --network=poa_hd && node bin/publish.js poa",
+    "publish-tobalaba": "truffle migrate --network=tobalaba && node bin/publish.js tobalaba",
+    "publish-production": "node bin/publish.js production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org:smartcharging/contracts.git"
+  },
+  "author": "Share & Charge foundation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://bitbucket.org/smartcharging/contracts/issues?status=new&status=open"
+  },
+  "homepage": "https://bitbucket.org/smartcharging/contracts",
+  "devDependencies": {
+    "apollo-client": "^2.4.12",
+    "apollo-link": "^1.2.6",
+    "apollo-link-http": "^1.5.9",
+    "ganache-cli": "^6.2.5",
+    "graphql": "^14.1.1",
+    "graphql-tag": "^2.10.1",
+    "mkdirp": "^0.5.1",
+    "node-fetch": "^2.3.0",
+    "openzeppelin-solidity": "^2.1.1",
+    "solium": "^1.2.4",
+    "truffle": "^5.0.1",
+    "truffle-contract": "^4.0.1",
+    "truffle-flattener": "^1.3.0",
+    "truffle-hdwallet-provider": "^1.0.2"
+  },
+  "dependencies": {
+    "bignumber.js": "^8.0.2",
+    "ethers": "^4.0.20",
+    "web3-utils": "^1.0.0-beta.37"
+  }
+}
